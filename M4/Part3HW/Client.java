@@ -1,4 +1,4 @@
-package M4.Part3;
+package M4.Part3HW;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -121,7 +121,11 @@ public class Client {
             String[] commandData = { Constants.COMMAND_TRIGGER, "reverse", text };
             sendToServer(String.join(",", commandData));
             wasCommand = true;
-        }
+        } else if ("/flip".equalsIgnoreCase(text.trim())) {
+            String[] commandData = {Constants.COMMAND_TRIGGER, "flip"};
+            sendToServer(String.join(",", commandData));
+            wasCommand = true;
+        }//ct52 4/22
         return wasCommand;
     }
 

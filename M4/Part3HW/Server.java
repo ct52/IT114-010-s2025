@@ -1,4 +1,4 @@
-package M4.Part3;
+package M4.Part3HW;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -38,6 +38,12 @@ public class Server {
             System.out.println("Closing server socket");
         }
     }
+
+    public void handleCoinFlip(ServerThread sender) {
+        String result = Math.random() < 0.5 ? "Heads" : "Tails";
+        String message = "Coin flip result for client" + sender.getClientId() + ": " + result;
+        relay(sender.getClientId(), message);
+    }//ct52 4/22
 
     /**
      * Callback passed to ServerThread to inform Server they're ready to receive

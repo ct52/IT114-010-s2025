@@ -1,4 +1,4 @@
-package M4.Part3;
+package M4.Part3HW;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -201,6 +201,10 @@ public class ServerThread extends Thread {
                         server.handleReverseText(this, relevantText);
                         wasCommand = true;
                         break;
+                    case "flip":
+                        server.handleCoinFlip(this);
+                        wasCommand = true;
+                        break;//ct52 4/22
                     // added more cases/breaks as needed for other commands
                     default:
                         break;
