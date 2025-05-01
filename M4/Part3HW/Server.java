@@ -1,4 +1,4 @@
-package M4.Part3;
+package M4.Part3HW;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -38,6 +38,12 @@ public class Server {
             System.out.println("Closing server socket");
         }
     }
+
+    public void handleCoinFlip(ServerThread sender) {
+        String result = Math.random() < 0.5 ? "Heads" : "Tails";
+        String message = "Coin flip result for client" + sender.getClientId() + ": " + result;
+        relay(sender.getClientId(), message);
+    }//ct52 4/22
 
     /**
      * Callback passed to ServerThread to inform Server they're ready to receive
@@ -129,6 +135,35 @@ public class Server {
 
     protected synchronized void handleMessage(ServerThread sender, String text) {
         relay(sender, text);
+    }
+
+    protected synchronized void handlePrivateMessage(DerverThread sender, String targetId, String message) {
+        try {
+            long targetClientId = Long.parseLong(targetId);
+            ServerThread targetThread = connectedClients.get(targetClientId);
+            if (targetThread != null) {
+                String formattedMessage = String.format("PM form User[%d]: %s", sender.getClientId(), message);
+                sender.sendToClient("Sever: " + formattedMessage);
+                targetThread.sendToClient("Sever: " + formattedMessage);
+            } else {
+                sender.sendToClient("Sever: User[" + targetId + "] net found or not connected.");
+            }
+        } catch (NumberFormatException e) {
+            sender.sendToclient("Sever: Invalid target ID format.");
+        }
+    }//ct52 4/22
+
+    protected synchronized void handleShuffleText(ServerThread sender, String text) {
+        char[] chars = text.toCharArray();
+        for (int i = 0; i < chars.length; i++) {
+            int j = (int) (Math.random() * chars.length);
+            char temp = chars[i];
+            chars[i] = chars[j];
+            chars[j] = temp;
+        }
+        String shuffled = new String(chars);
+        String message = String.format("Shuffled from User[%d]: %s", sender.getClientId(), shuffled);
+        relay(null, message);// ct52 4/25
     }
     // end handle actions
 
