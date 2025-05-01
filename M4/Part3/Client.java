@@ -1,4 +1,4 @@
-package M4.Part3HW;
+package M4.Part3;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -121,32 +121,7 @@ public class Client {
             String[] commandData = { Constants.COMMAND_TRIGGER, "reverse", text };
             sendToServer(String.join(",", commandData));
             wasCommand = true;
-        } else if ("/flip".equalsIgnoreCase(text.trim())) {
-            String[] commandData = {Constants.COMMAND_TRIGGER, "flip"};
-            sendToServer(String.join(",", commandData));
-            wasCommand = true;//ct52 4/22
-        } else if (text.toLowerCase().startsWith("/pm")) {
-            String[] parts = text.trim().split("\\s+", 3);
-            if (parts.length >= 3) {
-                String targetId = parts[1];
-                String message = parts[2];
-                String[] commandData = { Constants.COMMAND_TRIGGER, "pm", targetId, message };
-                sendToServer(String.join(",", commandData));
-                wasCommand = true;
-            } else {
-                System.out.println("Invalid /pm format. Usage: /pm <targetId> <message>");
-            }
-        } else if (text.toLowerCase().startsWith("/shuffle")) {
-            String message = text.replaceFirst("(?i)/shuffle", "").trim();
-            if (!message.isEmpty()) {
-                String[] commandData = { Constants.COMMAND_TRIGGER, "shuffle", message };
-                sendToServer(String.join(",", commandData));
-                wasCommand = true;
-            } else {
-                System.out.println("Invalid /shuffle format. Usage: /shuffle <message>");
-            }
         }
-            //ct52 4/25
         return wasCommand;
     }
 

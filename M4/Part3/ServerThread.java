@@ -1,4 +1,4 @@
-package M4.Part3HW;
+package M4.Part3;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -201,25 +201,6 @@ public class ServerThread extends Thread {
                         server.handleReverseText(this, relevantText);
                         wasCommand = true;
                         break;
-                    case "flip":
-                        server.handleCoinFlip(this);
-                        wasCommand = true;
-                        break;//ct52 4/22
-                    case "pm":
-                        if (commandData.length >= 4) {
-                            String targetId = commandData[2].trim();
-                            String privateMessage = String.join(" ", Arrys.copyOfRange(commandData, 3, commandData.length));
-                            server.handlePrivateMessage(this, targetId, privateMessage);
-                            wasCommand = true;
-                        }
-                        break;
-                    case "shuffle":
-                        if (commandData.length >= 3) {
-                            String shuffleText = String.join(" ", Arrays.copyOfRange(commandData, 2, commandData.length));
-                            server.handleShuffleText(this, shuffleText);
-                            wasCommand = true;
-                        }
-                        break; // ct52 4/25
                     // added more cases/breaks as needed for other commands
                     default:
                         break;
